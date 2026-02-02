@@ -20,7 +20,8 @@
 #define fnd_addr XPAR_MYIP_FND_CNTR_0_BASEADDR
 #define intc_addr XPAR_MICROBLAZE_RISCV_0_AXI_INTC_BASEADDR
 #define uart_addr XPAR_XUARTLITE_0_BASEADDR
-// #define pixel_addr XPAR_MYIP_PIXEL_LCD_0_BASEADDR
+#define pixel_addr XPAR_MYIP_PIXEL_LCD_0_BASEADDR
+#define alarm_addr XPAR_MYIP_ALARM_0_BASEADDR
 
 #define GPIO_VEC_ID XPAR_FABRIC_XGPIO_0_INTR
 #define UART_VEC_ID XPAR_FABRIC_AXI_UARTLITE_0_INTR
@@ -149,20 +150,21 @@ XGpio gpio_device;
 unsigned int *stopwatch_device = (unsigned int*) stopwatch_addr;
 unsigned int *watch_device = (unsigned int*) watch_addr;
 unsigned int *cooktimer_device = (unsigned int*) cooktimer_addr;
-// unsigned int *pixel_device = (unsigned int*) pixel_addr;
+unsigned int *pixel_device = (unsigned int*) pixel_addr;
 unsigned int *fnd_device = (unsigned int*)fnd_addr; 
+unsigned int *alarm_device = (unsigned int*) alarm_addr;
 
 static inline void alarm_on(){
-    cooktimer_device[5] = 1;
+    alarm_device[0] = 1;
 }
 
 static inline void alarm_off(){
-    cooktimer_device[5] = 0;
+    alarm_device[0] = 0;
 }
 
 static void alarm_pulse(){
     alarm_on();
-    usleep(200000);
+    sleep(1);
     alarm_off();
 }
 
@@ -435,13 +437,13 @@ int main(){
     fnd_device[1] = 1; 
 
     // print("Initializing Pixel LCD (ILI9341)...\n");
-    // // volatile unsigned int *pixel_cntr = (unsigned int*)(pixel_addr +4);
-    // // *pixel_cntr = 1;
-    // // usleep(10000);
-    // // *pixel_cntr = 0;
+    // volatile unsigned int *pixel_cntr = (unsigned int*)(pixel_addr +4);
+    // *pixel_cntr = 1;
+    // usleep(10000);
+    // *pixel_cntr = 0;
     // usleep(120000);
     // print("Pixel LCD reset complete\n");
-    // // pixel_device[0] = 0;
+    // pixel_device[0] = 0;
     // print("Pixel LCD initialization done\n");
 
     //watch 시간 설정
@@ -488,6 +490,23 @@ int main(){
         {23, 15, 0},   // 아이스하키
     };
     static char schedule_fired[3] = {0, 0, 0};
+
+//     void buzzer_test() {
+//     xil_printf("Buzzer Test Start...\r\n");
+    
+//     // 약 500번 반복 (1ms 켜고 1ms 끄면 2ms 주기 = 500Hz)
+//     for (int i = 0; i < 500; i++) {
+//         // 1. 부저 켜기 (slv_reg5 = 1)
+//         cooktimer_device[5] = 1; 
+//         usleep(500); // 1ms 대기
+        
+//         // 2. 부저 끄기 (slv_reg5 = 0)
+//         cooktimer_device[5] = 0; 
+//         usleep(500); // 1ms 대기
+//     }
+    
+//     xil_printf("Buzzer Test End.\r\n");
+// }
 
     while(1)
     {   
