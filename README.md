@@ -73,3 +73,8 @@ Xilinx FPGA 환경에서 **MicroBlaze/RISC-V 소프트 프로세서**를 활용�
 * **Interrupt-Driven IO**: GPIO(버튼/스위치) 및 UART 수신을 인터럽트 방식으로 처리하여 CPU 부하를 줄이고 루프 지연을 최소화했습니다.
 * **Shared Memory Register Map**: 각 하드웨어 IP의 레지스터 주소를 직접 핸들링하여 저수준 제어 성능을 확보했습니다.
 * **Modular LCD Update**: 화면 전체를 지우지 않고 필요한 부분(8칸 단위 등)만 갱신하여 LCD 데이터 병목 및 깜빡임 현상을 해결했습니다.
+
+<img width="335" height="854" alt="image" src="https://github.com/user-attachments/assets/257afa18-c34a-4976-8c32-9c16ee72a9c1" />
+<img width="875" height="855" alt="image" src="https://github.com/user-attachments/assets/26ea42fc-1235-45cb-9a71-60a9a61c962d" />
+
+
